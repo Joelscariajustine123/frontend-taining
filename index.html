@@ -1,0 +1,1166 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Frontend Development Training | Veinbit Software Solutions LLP</title>
+    
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <!-- PrismJS for Syntax Highlighting -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-tomorrow.min.css" rel="stylesheet" />
+
+    <style>
+        /* --- CSS VARIABLES & THEME --- */
+        :root {
+            /* Light Theme Variables */
+            --bg-color: #f8fafc;
+            --text-color: #0f172a;
+            --text-muted: #475569;
+            --primary: #3b82f6;
+            --primary-hover: #2563eb;
+            --secondary: #8b5cf6;
+            --glass-bg: rgba(255, 255, 255, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.5);
+            --card-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.1);
+            --code-bg: #1e293b;
+            --gradient-1: linear-gradient(135deg, #e0f2fe 0%, #ede9fe 100%);
+        }
+
+        body.dark {
+            /* Dark Theme Variables */
+            --bg-color: #0f172a;
+            --text-color: #f8fafc;
+            --text-muted: #94a3b8;
+            --primary: #60a5fa;
+            --primary-hover: #3b82f6;
+            --glass-bg: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+            --card-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.4);
+            --gradient-1: linear-gradient(135deg, #0f172a 0%, #1e1b4b 100%);
+        }
+
+        /* --- GLOBAL STYLES --- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Poppins', sans-serif;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: var(--bg-color);
+            color: var(--text-color);
+            transition: background 0.3s ease, color 0.3s ease;
+            overflow-x: hidden;
+        }
+
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        ul {
+            list-style: none;
+        }
+
+        /* --- UTILITY CLASSES --- */
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .section-padding {
+            padding: 100px 0;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            margin-bottom: 50px;
+            background: -webkit-linear-gradient(45deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .glass {
+            background: var(--glass-bg);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-radius: 16px;
+            box-shadow: var(--card-shadow);
+        }
+
+        .btn {
+            display: inline-block;
+            padding: 12px 28px;
+            background: var(--primary);
+            color: #fff;
+            border: none;
+            border-radius: 8px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(59, 130, 246, 0.4);
+        }
+
+        .btn:hover {
+            background: var(--primary-hover);
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 8px 25px rgba(59, 130, 246, 0.5);
+        }
+
+        /* --- NAVIGATION --- */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+            padding: 20px 0;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 10px 0;
+            background: var(--glass-bg);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid var(--glass-border);
+            box-shadow: var(--card-shadow);
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 800;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links li a {
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        .nav-links li a:hover {
+            color: var(--primary);
+        }
+
+        .theme-toggle {
+            cursor: pointer;
+            font-size: 1.2rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            transition: transform 0.3s;
+        }
+        
+        .theme-toggle:hover {
+            transform: rotate(30deg);
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            font-size: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-color);
+            cursor: pointer;
+        }
+
+        /* --- HERO SECTION --- */
+        #hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            background: var(--gradient-1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-content {
+            z-index: 2;
+        }
+
+        .hero-subtitle {
+            font-size: 1.2rem;
+            color: var(--secondary);
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+            animation: fadeInDown 1s ease;
+        }
+
+        .hero-title {
+            font-size: 4rem;
+            font-weight: 800;
+            margin-bottom: 20px;
+            line-height: 1.2;
+            animation: fadeInUp 1s ease 0.2s both;
+        }
+
+        .hero-title span {
+            color: var(--primary);
+        }
+
+        .hero-company {
+            font-size: 1.5rem;
+            margin-bottom: 30px;
+            color: var(--text-muted);
+            animation: fadeInUp 1s ease 0.4s both;
+        }
+
+        .floating-icons {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            pointer-events: none;
+            z-index: 1;
+        }
+
+        .float-icon {
+            position: absolute;
+            font-size: 4rem;
+            opacity: 0.2;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        .icon-html { top: 20%; left: 10%; color: #e34f26; animation-delay: 0s; }
+        .icon-css { top: 60%; right: 15%; color: #1572b6; animation-delay: 2s; font-size: 5rem;}
+        .icon-js { bottom: 20%; left: 20%; color: #f7df1e; animation-delay: 4s; }
+
+        /* --- COURSE OVERVIEW --- */
+        .overview-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .overview-card {
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+
+        .overview-card:hover {
+            transform: translateY(-10px);
+        }
+
+        .overview-card i {
+            font-size: 3rem;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        /* --- CURRICULUM SECTION --- */
+        .module-card {
+            margin-bottom: 40px;
+            padding: 40px;
+            border-left: 5px solid var(--primary);
+        }
+
+        .module-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+            border-bottom: 1px solid var(--glass-border);
+            padding-bottom: 10px;
+        }
+
+        .module-title {
+            font-size: 1.8rem;
+            color: var(--primary);
+        }
+
+        .module-hours {
+            background: var(--secondary);
+            color: white;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.9rem;
+            font-weight: bold;
+        }
+
+        .module-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 40px;
+        }
+
+        .topic-list {
+            list-style: none;
+        }
+
+        .topic-list li {
+            margin-bottom: 10px;
+            position: relative;
+            padding-left: 25px;
+        }
+
+        .topic-list li::before {
+            content: '✓';
+            position: absolute;
+            left: 0;
+            color: var(--secondary);
+            font-weight: bold;
+        }
+
+        .code-explanation {
+            background: rgba(0,0,0,0.05);
+            padding: 15px;
+            border-radius: 8px;
+            margin-top: 15px;
+            font-size: 0.95rem;
+        }
+        
+        body.dark .code-explanation {
+            background: rgba(255,255,255,0.05);
+        }
+
+        pre {
+            border-radius: 8px !important;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.5);
+            max-height: 400px;
+        }
+
+        /* --- INTERACTIVE DEMOS --- */
+        .demo-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .demo-card {
+            padding: 25px;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .demo-preview {
+            background: #fff;
+            color: #333; /* Always light text in preview for consistency unless dark mode specified */
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #ddd;
+            min-height: 150px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-direction: column;
+            text-align: center;
+        }
+
+        body.dark .demo-preview {
+            background: #1e293b;
+            color: #fff;
+            border-color: #334155;
+        }
+
+        /* Specific Demo Styles */
+        #color-box {
+            width: 100px; height: 100px; background: #3b82f6; border-radius: 8px; margin-bottom: 10px; transition: background 0.3s;
+        }
+        
+        .slider-container {
+            width: 100%; overflow: hidden; position: relative; border-radius: 8px;
+        }
+        .slider-track {
+            display: flex; transition: transform 0.5s ease; width: 300%;
+        }
+        .slide {
+            width: 100%; flex-shrink: 0; height: 150px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: white;
+        }
+        .slider-controls {
+            display: flex; gap: 10px; margin-top: 10px;
+        }
+
+        .calc-input {
+            width: 60px; padding: 5px; margin: 5px; border-radius: 4px; border: 1px solid #ccc;
+        }
+        .calc-select {
+            padding: 5px; border-radius: 4px;
+        }
+
+        /* --- MINI PROJECTS --- */
+        .projects-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .project-card {
+            padding: 30px;
+            text-align: center;
+            transition: transform 0.3s;
+        }
+        .project-card:hover {
+            transform: scale(1.05);
+        }
+        .project-card i {
+            font-size: 2.5rem; color: var(--secondary); margin-bottom: 15px;
+        }
+
+        /* --- TRAINER SECTION --- */
+        .trainer-card {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 40px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .trainer-img-placeholder {
+            width: 150px;
+            height: 150px;
+            background: var(--gradient-1);
+            border-radius: 50%;
+            margin: 0 auto 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: var(--primary);
+            border: 4px solid var(--glass-border);
+        }
+
+        .trainer-title {
+            color: var(--secondary);
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+
+        .trainer-badges {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            flex-wrap: wrap;
+            margin-top: 15px;
+        }
+        .badge {
+            background: rgba(59, 130, 246, 0.2);
+            padding: 5px 12px;
+            border-radius: 15px;
+            font-size: 0.85rem;
+            color: var(--primary);
+        }
+
+        /* --- CONTACT SECTION --- */
+        .contact-container {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 40px;
+        }
+        
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-control {
+            width: 100%;
+            padding: 15px;
+            background: rgba(255, 255, 255, 0.1);
+            border: 1px solid var(--glass-border);
+            border-radius: 8px;
+            color: var(--text-color);
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+
+        .form-control:focus {
+            outline: none;
+            border-color: var(--primary);
+        }
+        
+        body.dark .form-control {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        textarea.form-control {
+            height: 150px;
+            resize: vertical;
+        }
+
+        /* --- FOOTER --- */
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: var(--glass-bg);
+            border-top: 1px solid var(--glass-border);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes float {
+            0% { transform: translateY(0px) rotate(0deg); }
+            50% { transform: translateY(-20px) rotate(10deg); }
+            100% { transform: translateY(0px) rotate(0deg); }
+        }
+
+        @keyframes fadeInUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        @keyframes fadeInDown {
+            from { opacity: 0; transform: translateY(-30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        /* Scroll Reveal Class */
+        .reveal {
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease-out;
+        }
+
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* --- RESPONSIVE DESIGN --- */
+        @media (max-width: 992px) {
+            .module-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .hero-title { font-size: 2.5rem; }
+            .nav-links {
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background: var(--glass-bg);
+                backdrop-filter: blur(15px);
+                flex-direction: column;
+                padding: 20px 0;
+                clip-path: polygon(0 0, 100% 0, 100% 0, 0 0);
+                transition: clip-path 0.4s ease-out;
+            }
+            .nav-links.active {
+                clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%);
+            }
+            .mobile-menu-btn { display: block; }
+        }
+    </style>
+</head>
+<body class="dark"> <!-- Defaulting to Dark theme for modern look -->
+
+    <!-- NAVIGATION -->
+    <nav id="navbar">
+        <div class="container nav-container">
+            <div class="logo">Veinbit<span style="color:var(--text-color);">.</span></div>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#overview">Overview</a></li>
+                <li><a href="#curriculum">Curriculum</a></li>
+                <li><a href="#demos">Demos</a></li>
+                <li><a href="#projects">Projects</a></li>
+                <li><a href="#trainer">Trainer</a></li>
+                <li>
+                    <button class="theme-toggle" id="themeToggle" title="Toggle Dark/Light Mode">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                </li>
+            </ul>
+            <button class="mobile-menu-btn" id="menuBtn">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- HERO SECTION -->
+    <section id="hero">
+        <div class="floating-icons">
+            <i class="fab fa-html5 float-icon icon-html"></i>
+            <i class="fab fa-css3-alt float-icon icon-css"></i>
+            <i class="fab fa-js float-icon icon-js"></i>
+        </div>
+        <div class="container hero-content">
+            <p class="hero-subtitle">Frontend Development Training</p>
+            <h1 class="hero-title">Master the Web.<br><span>60-Hour</span> Professional Course.</h1>
+            <p class="hero-company">By Veinbit Software Solutions LLP</p>
+            <a href="#curriculum" class="btn">Explore Curriculum <i class="fas fa-arrow-right"></i></a>
+        </div>
+    </section>
+
+    <!-- OVERVIEW SECTION -->
+    <section id="overview" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Course Overview</h2>
+            <div class="glass p-5 reveal" style="padding: 40px;">
+                <h3 style="margin-bottom: 15px; color: var(--primary);">What is Frontend Development?</h3>
+                <p style="margin-bottom: 20px; line-height: 1.8;">
+                    Frontend development is the process of building the visible parts of a website or web application that users interact with directly. 
+                    <strong>Frontend vs Backend:</strong> If a website were a restaurant, the Frontend is the dining area, the menus, and the waiters (what you see and interact with). The Backend is the kitchen, the pantry, and the chefs (behind-the-scenes data processing and storage).
+                </p>
+                
+                <h3 style="margin-bottom: 20px; color: var(--primary);">Core Technologies Learned</h3>
+                <div class="overview-grid">
+                    <div class="glass overview-card">
+                        <i class="fab fa-html5"></i>
+                        <h4>HTML5</h4>
+                        <p>Structure & Semantics</p>
+                    </div>
+                    <div class="glass overview-card">
+                        <i class="fab fa-css3-alt"></i>
+                        <h4>CSS3</h4>
+                        <p>Styling & Animations</p>
+                    </div>
+                    <div class="glass overview-card">
+                        <i class="fab fa-js"></i>
+                        <h4>JavaScript</h4>
+                        <p>Logic & Interactivity</p>
+                    </div>
+                    <div class="glass overview-card">
+                        <i class="fas fa-mobile-alt"></i>
+                        <h4>Responsive Design</h4>
+                        <p>Mobile-First Layouts</p>
+                    </div>
+                    <div class="glass overview-card">
+                        <i class="fas fa-project-diagram"></i>
+                        <h4>DOM Manipulation</h4>
+                        <p>Dynamic UI Updates</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CURRICULUM SECTION -->
+    <section id="curriculum" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">60-Hour Curriculum</h2>
+
+            <!-- Module 1 -->
+            <div class="glass module-card reveal">
+                <div class="module-header">
+                    <h3 class="module-title">Module 1: Introduction to Web Development</h3>
+                    <span class="module-hours">5 Hours</span>
+                </div>
+                <div class="module-content" style="grid-template-columns: 1fr;">
+                    <div>
+                        <p style="margin-bottom: 15px;">We begin by understanding the fundamentals of how the internet operates.</p>
+                        <ul class="topic-list">
+                            <li><strong>Website vs Web App:</strong> A website is informative (like a blog), a web app is interactive (like Gmail).</li>
+                            <li><strong>Client vs Server:</strong> Your browser (Client) requests data; the remote computer (Server) sends it.</li>
+                            <li><strong>HTTP vs HTTPS:</strong> The protocol for sending data. HTTPS is secure (encrypted).</li>
+                            <li><strong>Web Browsers:</strong> How Chrome, Firefox, and Safari render code into visuals.</li>
+                            <li><strong>How the Internet Works:</strong> DNS, IP Addresses, and Packets.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 2 -->
+            <div class="glass module-card reveal">
+                <div class="module-header">
+                    <h3 class="module-title">Module 2: HTML Fundamentals</h3>
+                    <span class="module-hours">15 Hours</span>
+                </div>
+                <div class="module-content">
+                    <div>
+                        <ul class="topic-list">
+                            <li>HTML Structure & Boilerplate</li>
+                            <li>Tags and Elements</li>
+                            <li>Headings (h1-h6) & Paragraphs</li>
+                            <li>Links & Images (Attributes)</li>
+                            <li>Ordered & Unordered Lists</li>
+                            <li>Tables (tr, th, td)</li>
+                            <li>Forms (Inputs, Labels, Buttons)</li>
+                            <li>Semantic HTML (header, main, footer)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Example Code:</h4>
+<pre><code class="language-html">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;My First Webpage&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+    &lt;h1&gt;Welcome to Frontend Development&lt;/h1&gt;
+    &lt;p&gt;This is my first webpage.&lt;/p&gt;
+    &lt;a href="#"&gt;Click Here&lt;/a&gt;
+&lt;/body&gt;
+&lt;/html&gt;</code></pre>
+                        <div class="code-explanation">
+                            <strong>Explanation:</strong> <code>&lt;!DOCTYPE html&gt;</code> declares it's an HTML5 document. The <code>&lt;head&gt;</code> contains metadata like the title. The <code>&lt;body&gt;</code> contains the visible content: a main heading (<code>h1</code>), a paragraph (<code>p</code>), and a clickable link (<code>a</code>).
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 3 -->
+            <div class="glass module-card reveal">
+                <div class="module-header">
+                    <h3 class="module-title">Module 3: CSS Styling</h3>
+                    <span class="module-hours">20 Hours</span>
+                </div>
+                <div class="module-content">
+                    <div>
+                        <p style="margin-bottom: 10px;"><strong>What is CSS?</strong> Cascading Style Sheets dictate the look and feel of the HTML elements. We cover Inline, Internal, and External CSS.</p>
+                        <ul class="topic-list">
+                            <li>Colors & Fonts</li>
+                            <li>The Box Model (Margin, Border, Padding, Content)</li>
+                            <li>Flexbox (1D Layouts)</li>
+                            <li>CSS Grid (2D Layouts)</li>
+                            <li>Responsive Design & Media Queries</li>
+                            <li>CSS Animations & Transitions</li>
+                            <li>Hover Effects</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Example Code:</h4>
+<pre><code class="language-css">body {
+    background: #0f172a;
+    color: white;
+    font-family: Arial;
+}
+
+button {
+    padding: 10px 20px;
+    background: blue;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    transition: 0.3s;
+}
+
+button:hover {
+    background: red;
+    transform: scale(1.1);
+}</code></pre>
+                        <div class="code-explanation">
+                            <strong>Explanation:</strong> This styles the entire body dark blue with white text. It creates a blue button with rounded corners (border-radius). The <code>transition</code> property allows the button to smoothly turn red and grow larger (<code>transform: scale</code>) when the mouse hovers over it.
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Module 4 -->
+            <div class="glass module-card reveal">
+                <div class="module-header">
+                    <h3 class="module-title">Module 4: JavaScript Fundamentals</h3>
+                    <span class="module-hours">20 Hours</span>
+                </div>
+                <div class="module-content">
+                    <div>
+                         <p style="margin-bottom: 10px;"><strong>What is JavaScript?</strong> JS is the programming language of the web that makes pages interactive. It runs directly inside your browser.</p>
+                        <ul class="topic-list">
+                            <li>Variables (let, const) & Data Types</li>
+                            <li>Operators & Conditions (if/else)</li>
+                            <li>Loops (for, while)</li>
+                            <li>Functions</li>
+                            <li>Arrays & Objects</li>
+                            <li>DOM Manipulation</li>
+                            <li>Events & Form Validation</li>
+                            <li>Fetch API (Getting data from servers)</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4>Example Code:</h4>
+<pre><code class="language-javascript">function showMessage() {
+    alert("Welcome to Frontend Training");
+}</code></pre>
+<pre><code class="language-html">&lt;button onclick="showMessage()"&gt;Click Me&lt;/button&gt;</code></pre>
+                        <div class="code-explanation">
+                            <strong>Explanation:</strong> The JS defines a reusable function called <code>showMessage</code> that triggers a browser popup alert. The HTML <code>button</code> uses the <code>onclick</code> event attribute. When clicked, it tells the browser to execute that JavaScript function, showing interaction between HTML and JS.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- INTERACTIVE DEMOS -->
+    <section id="demos" class="section-padding" style="background: rgba(0,0,0,0.02);">
+        <div class="container">
+            <h2 class="section-title reveal">Interactive Demo Section</h2>
+            <div class="demo-grid">
+                
+                <!-- Demo 1 -->
+                <div class="glass demo-card reveal">
+                    <h3>1️⃣ Button Click Alert</h3>
+                    <div class="demo-preview">
+                        <button class="btn" onclick="alert('Welcome to Veinbit Training!')">Click Me</button>
+                    </div>
+<pre><code class="language-html">&lt;button onclick="alert('Hi')"&gt;
+  Click Me
+&lt;/button&gt;</code></pre>
+                </div>
+
+                <!-- Demo 2 -->
+                <div class="glass demo-card reveal">
+                    <h3>2️⃣ Color Changer</h3>
+                    <div class="demo-preview">
+                        <div id="color-box"></div>
+                        <button class="btn" style="padding: 8px 15px; font-size: 0.9rem;" onclick="changeColor()">Change Color</button>
+                    </div>
+<pre><code class="language-javascript">function changeColor() {
+  let box = document.getElementById('color-box');
+  box.style.background = '#' + Math.floor(Math.random()*16777215).toString(16);
+}</code></pre>
+                </div>
+
+                <!-- Demo 3 -->
+                <div class="glass demo-card reveal">
+                    <h3>3️⃣ Image Slider</h3>
+                    <div class="demo-preview" style="padding: 10px;">
+                        <div class="slider-container">
+                            <div class="slider-track" id="sliderTrack">
+                                <div class="slide" style="background:#e63946;">Slide 1</div>
+                                <div class="slide" style="background:#2a9d8f;">Slide 2</div>
+                                <div class="slide" style="background:#e9c46a;">Slide 3</div>
+                            </div>
+                        </div>
+                        <div class="slider-controls">
+                            <button class="btn" style="padding: 5px 10px;" onclick="moveSlide(-1)">Prev</button>
+                            <button class="btn" style="padding: 5px 10px;" onclick="moveSlide(1)">Next</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Demo 4 -->
+                <div class="glass demo-card reveal">
+                    <h3>4️⃣ Simple Calculator</h3>
+                    <div class="demo-preview">
+                        <div>
+                            <input type="number" id="calc-num1" class="calc-input" value="5">
+                            <select id="calc-op" class="calc-select">
+                                <option value="+">+</option>
+                                <option value="-">-</option>
+                                <option value="*">*</option>
+                            </select>
+                            <input type="number" id="calc-num2" class="calc-input" value="3">
+                        </div>
+                        <button class="btn" style="margin-top: 10px; padding: 5px 15px;" onclick="calculate()">= Calculate</button>
+                        <h4 style="margin-top: 10px;" id="calc-result">Result: 8</h4>
+                    </div>
+                </div>
+
+                <!-- Demo 5 -->
+                <div class="glass demo-card reveal">
+                    <h3>5️⃣ Local Dark Mode Toggle</h3>
+                    <div class="demo-preview" id="local-theme-box" style="transition: all 0.3s;">
+                        <h4 id="local-theme-text">Light Mode Active</h4>
+                        <p style="font-size: 0.8rem; margin: 10px 0;">This box has its own independent theme.</p>
+                        <button class="btn" onclick="toggleLocalTheme()">Toggle Theme</button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- MINI PROJECTS -->
+    <section id="projects" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Mini Projects Included</h2>
+            <div class="projects-grid">
+                <div class="glass project-card reveal">
+                    <i class="fas fa-id-badge"></i>
+                    <h3>Project 1</h3>
+                    <h4 style="color:var(--primary); margin: 5px 0;">Personal Portfolio</h4>
+                    <p class="text-muted">A multi-page portfolio showcasing your skills, built with semantic HTML and CSS Flexbox.</p>
+                </div>
+                <div class="glass project-card reveal">
+                    <i class="fas fa-rocket"></i>
+                    <h3>Project 2</h3>
+                    <h4 style="color:var(--primary); margin: 5px 0;">Landing Page</h4>
+                    <p class="text-muted">A business landing page focusing on modern UI/UX design, hover effects, and responsive grid layouts.</p>
+                </div>
+                <div class="glass project-card reveal">
+                    <i class="fas fa-check-square"></i>
+                    <h3>Project 3</h3>
+                    <h4 style="color:var(--primary); margin: 5px 0;">To-Do List App</h4>
+                    <p class="text-muted">A fully functional JS application to add, delete, and mark tasks complete. Uses Local Storage.</p>
+                </div>
+                <div class="glass project-card reveal">
+                    <i class="fas fa-bars"></i>
+                    <h3>Project 4</h3>
+                    <h4 style="color:var(--primary); margin: 5px 0;">Responsive Navigation</h4>
+                    <p class="text-muted">A dynamic navbar that changes layout on mobile devices using Media Queries and JS toggle.</p>
+                </div>
+                <div class="glass project-card reveal">
+                    <i class="fas fa-images"></i>
+                    <h3>Project 5</h3>
+                    <h4 style="color:var(--primary); margin: 5px 0;">Image Gallery</h4>
+                    <p class="text-muted">A CSS Grid gallery with a JS lightbox effect to view images in full screen when clicked.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- WHY LEARN -->
+    <section id="why-learn" class="section-padding" style="background: rgba(0,0,0,0.02);">
+        <div class="container">
+            <h2 class="section-title reveal">Why Learn Frontend Development?</h2>
+            <div class="projects-grid">
+                <div class="glass project-card reveal text-center">
+                    <i class="fas fa-chart-line" style="color:#10b981;"></i>
+                    <h3 style="margin-bottom:10px;">High Demand</h3>
+                    <p>Every business needs a website, resulting in massive job opportunities globally.</p>
+                </div>
+                <div class="glass project-card reveal text-center">
+                    <i class="fas fa-laptop-house" style="color:#f59e0b;"></i>
+                    <h3 style="margin-bottom:10px;">Remote Work</h3>
+                    <p>Frontend developers enjoy the highest rate of work-from-home flexibility.</p>
+                </div>
+                <div class="glass project-card reveal text-center">
+                    <i class="fas fa-hand-holding-usd" style="color:#8b5cf6;"></i>
+                    <h3 style="margin-bottom:10px;">Freelancing</h3>
+                    <p>Start your own business building websites for clients around the world.</p>
+                </div>
+                <div class="glass project-card reveal text-center">
+                    <i class="fas fa-lightbulb" style="color:#ec4899;"></i>
+                    <h3 style="margin-bottom:10px;">Startups</h3>
+                    <p>Build the next big web application by turning your ideas into code.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- TRAINER PROFILE -->
+    <section id="trainer" class="section-padding">
+        <div class="container">
+            <h2 class="section-title reveal">Meet Your Trainer</h2>
+            <div class="glass trainer-card reveal">
+                <div class="trainer-img-placeholder">
+                    <i class="fas fa-user-tie"></i>
+                </div>
+                <h2>Joel Scaria Justine</h2>
+                <h4 class="trainer-title">Python Full Stack Developer</h4>
+                
+                <div class="trainer-badges">
+                    <span class="badge"><i class="fas fa-shield-alt"></i> Cybersecurity Enthusiast</span>
+                    <span class="badge"><i class="fas fa-chalkboard-teacher"></i> Python Trainer</span>
+                    <span class="badge"><i class="fas fa-building"></i> Veinbit Software Solutions</span>
+                </div>
+                
+                <p style="margin-top: 20px; color: var(--text-muted); font-size: 0.95rem;">
+                    With extensive experience in full-stack development and a deep passion for cybersecurity, Joel brings real-world industry knowledge directly into the classroom. His hands-on teaching style ensures every student builds practical, highly-valued skills.
+                </p>
+                <div style="margin-top: 25px; display:flex; gap:15px; justify-content:center;">
+                    <a href="#" style="font-size: 1.5rem; color: #0077b5; transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-linkedin"></i></a>
+                    <a href="#" style="font-size: 1.5rem; color: var(--text-color); transition: transform 0.3s;" onmouseover="this.style.transform='scale(1.2)'" onmouseout="this.style.transform='scale(1)'"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CONTACT SECTION -->
+    <section id="contact" class="section-padding" style="background: rgba(0,0,0,0.02);">
+        <div class="container">
+            <h2 class="section-title reveal">Contact Us</h2>
+            <div class="contact-container">
+                <form class="glass p-4 reveal" style="padding: 40px;" onsubmit="handleFormSubmit(event)">
+                    <div class="form-group">
+                        <input type="text" id="name" class="form-control" placeholder="Your Name" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="email" id="email" class="form-control" placeholder="Your Email" required>
+                    </div>
+                    <div class="form-group">
+                        <input type="tel" id="phone" class="form-control" placeholder="Your Phone Number" required>
+                    </div>
+                    <div class="form-group">
+                        <textarea id="message" class="form-control" placeholder="Your Message" required></textarea>
+                    </div>
+                    <button type="submit" class="btn" style="width: 100%; font-size: 1.1rem; padding: 15px;">
+                        Send Message <i class="fas fa-paper-plane"></i>
+                    </button>
+                    <p id="form-status" style="margin-top: 15px; text-align: center; font-weight: bold; color: #10b981; display: none;">Message Sent Successfully!</p>
+                </form>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <h3 style="color: var(--primary); margin-bottom: 10px;">Veinbit Software Solutions LLP</h3>
+            <p style="color: var(--text-muted); font-size: 0.9rem;">&copy; 2026 Veinbit Software Solutions. All Rights Reserved.</p>
+            <div style="margin-top: 15px; display:flex; gap:15px; justify-content:center;">
+                <a href="#" style="color: var(--text-muted);"><i class="fab fa-facebook"></i></a>
+                <a href="#" style="color: var(--text-muted);"><i class="fab fa-instagram"></i></a>
+                <a href="#" style="color: var(--text-muted);"><i class="fab fa-twitter"></i></a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- PrismJS Script -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/prism.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-css.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-javascript.min.js"></script>
+
+    <!-- Custom JS -->
+    <script>
+        // --- Dark/Light Mode Toggle ---
+        const themeBtn = document.getElementById('themeToggle');
+        const body = document.body;
+        const icon = themeBtn.querySelector('i');
+
+        themeBtn.addEventListener('click', () => {
+            body.classList.toggle('dark');
+            if (body.classList.contains('dark')) {
+                icon.classList.remove('fa-moon');
+                icon.classList.add('fa-sun');
+            } else {
+                icon.classList.remove('fa-sun');
+                icon.classList.add('fa-moon');
+            }
+        });
+
+        // --- Sticky Navbar & Scroll Effects ---
+        const navbar = document.getElementById('navbar');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                navbar.classList.add('scrolled');
+            } else {
+                navbar.classList.remove('scrolled');
+            }
+        });
+
+        // --- Mobile Menu Toggle ---
+        const menuBtn = document.getElementById('menuBtn');
+        const navLinks = document.getElementById('navLinks');
+        
+        menuBtn.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+            const icon = menuBtn.querySelector('i');
+            if (navLinks.classList.contains('active')) {
+                icon.classList.remove('fa-bars');
+                icon.classList.add('fa-times');
+            } else {
+                icon.classList.remove('fa-times');
+                icon.classList.add('fa-bars');
+            }
+        });
+
+        // Close mobile menu on link click
+        navLinks.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+                menuBtn.querySelector('i').classList.replace('fa-times', 'fa-bars');
+            });
+        });
+
+        // --- Scroll Reveal Animation ---
+        const reveals = document.querySelectorAll('.reveal');
+
+        function revealOnScroll() {
+            const windowHeight = window.innerHeight;
+            const elementVisible = 150;
+
+            reveals.forEach(reveal => {
+                const elementTop = reveal.getBoundingClientRect().top;
+                if (elementTop < windowHeight - elementVisible) {
+                    reveal.classList.add('active');
+                }
+            });
+        }
+        window.addEventListener('scroll', revealOnScroll);
+        revealOnScroll(); // Trigger once on load
+
+        // --- INTERACTIVE DEMOS JS ---
+
+        // Color Changer
+        function changeColor() {
+            const box = document.getElementById('color-box');
+            const randomColor = '#' + Math.floor(Math.random()*16777215).toString(16).padStart(6, '0');
+            box.style.background = randomColor;
+        }
+
+        // Image Slider
+        let currentSlide = 0;
+        const totalSlides = 3;
+        const track = document.getElementById('sliderTrack');
+        
+        function moveSlide(direction) {
+            currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
+            // The track width is 300%, so each slide is 33.333% of the track
+            track.style.transform = `translateX(-${currentSlide * 33.333}%)`;
+        }
+
+        // Calculator
+        function calculate() {
+            const num1 = parseFloat(document.getElementById('calc-num1').value);
+            const num2 = parseFloat(document.getElementById('calc-num2').value);
+            const op = document.getElementById('calc-op').value;
+            const resEl = document.getElementById('calc-result');
+            
+            let result = 0;
+            switch(op) {
+                case '+': result = num1 + num2; break;
+                case '-': result = num1 - num2; break;
+                case '*': result = num1 * num2; break;
+            }
+            resEl.innerText = `Result: ${result}`;
+        }
+
+        // Local Theme Box
+        let isLocalDark = false;
+        function toggleLocalTheme() {
+            const box = document.getElementById('local-theme-box');
+            const text = document.getElementById('local-theme-text');
+            isLocalDark = !isLocalDark;
+            
+            if(isLocalDark) {
+                box.style.background = '#0f172a';
+                box.style.color = '#fff';
+                text.innerText = 'Dark Mode Active';
+            } else {
+                box.style.background = '#fff';
+                box.style.color = '#333';
+                text.innerText = 'Light Mode Active';
+            }
+        }
+
+        // --- Form Submission Simulation ---
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const status = document.getElementById('form-status');
+            
+            btn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Sending...';
+            
+            setTimeout(() => {
+                btn.innerHTML = 'Send Message <i class="fas fa-paper-plane"></i>';
+                status.style.display = 'block';
+                e.target.reset();
+                
+                setTimeout(() => {
+                    status.style.display = 'none';
+                }, 3000);
+            }, 1500);
+        }
+    </script>
+</body>
+</html>
